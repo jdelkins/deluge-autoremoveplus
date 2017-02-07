@@ -178,7 +178,7 @@ class Core(CorePluginBase):
 
         self.torrent_states.save()
 
-    def get_free_space():
+    def get_free_space(self):
         try:
             return int(subprocess.check_output([os.path.join(os.environ['HOME'], 'bin', 'quotacheck'), "--free"]).encode('utf-8'))
         except:
