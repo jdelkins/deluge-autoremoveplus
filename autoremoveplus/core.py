@@ -48,6 +48,7 @@ from twisted.internet import reactor
 from twisted.internet.task import LoopingCall, deferLater
 
 import time
+import subprocess
 
 DEFAULT_PREFS = {
     'max_seeds': 0,
@@ -177,9 +178,15 @@ class Core(CorePluginBase):
 
         self.torrent_states.save()
 
+    def get_free_space():
+        try:
+            return int(subprocess.check_output([os.path.join(os.environ['HOME'], 'bin', 'quotacheck'), "--free"]).encode('utf-8'))
+        except:
+            return 1000000
+
     def check_min_space(self):
         min_hdd_space = self.config['hdd_space']
-        real_hdd_space = component.get("Core").get_free_space() / 1073741824.0
+        real_hdd_space = self.get_free_space()
 
         log.debug("Space: %s/%s" % (real_hdd_space, min_hdd_space))
 
