@@ -180,7 +180,7 @@ class Core(CorePluginBase):
 
     def get_free_space(self):
         try:
-            return int(subprocess.check_output([os.path.join(os.environ['HOME'], 'bin', 'quotacheck'), "--free"]).encode('utf-8'))
+            return int(subprocess.check_output(['quotacheck', "--free"]).encode('utf-8'))
         except:
             return 1000000
 
